@@ -1,0 +1,68 @@
+{
+  "project_name": "solvay-multisite",
+  "drupal_root": "/Users/prashantk/dev/solvay/solvay-solvay_platform",
+  "ai_model": {
+    "provider": "google-gemini",
+    "model_name": "gemini-1.5-pro",
+    "api_key": "${GEMINI_API_KEY}",
+    "temperature": 0.2
+  },
+  "blackfire": {
+    "api_url": "https://blackfire.io/api/v1",
+    "client_id": "${BLACKFIRE_CLIENT_ID}",
+    "client_token": "${BLACKFIRE_CLIENT_TOKEN}",
+    "environment_uuid": "${BLACKFIRE_ENVIRONMENT_UUID}"
+  },
+  "upsun": {
+    "project_id": "${UPSUN_PROJECT_ID}",
+    "environment": "main",
+    "app_name": "drupal",
+    "access_log_path": ""
+  },
+  "multisites": [
+    {
+      "name": "solvay_solvay",
+      "domain": "solvay.solvay",
+      "profile": "solvay_main",
+      "db_schema": "solvay"
+    },
+    {
+      "name": "solvay_brand",
+      "domain": "brand.solvay",
+      "profile": "solvay_brand",
+      "db_schema": "solvaybrand"
+    },
+    {
+      "name": "solvay_beeco",
+      "domain": "beeco.solvay",
+      "profile": "solvay_country",
+      "db_schema": "beeco"
+    },
+    {
+      "name": "solvay_bicarbonatoeco",
+      "domain": "bicarbonato.solvay",
+      "profile": "solvay_country_complex",
+      "db_schema": "bicarbonatoit"
+    },
+    {
+      "name": "solvay_peroxidoseco",
+      "domain": "peroxidos.solvay",
+      "profile": "solvay_country",
+      "db_schema": "peroxidosecobr"
+    }
+  ],
+  "thresholds": {
+    "p95_latency_ms": 800,
+    "p99_latency_ms": 1500,
+    "max_sql_queries_per_request": 75,
+    "max_solr_queries_per_request": 10,
+    "max_memory_mb": 128,
+    "min_traffic_impact_threshold": 500
+  },
+  "notifications": {
+    "slack_webhook_url": "${SLACK_WEBHOOK_URL}",
+    "teams_webhook_url": "${TEAMS_WEBHOOK_URL}",
+    "save_markdown_report": true,
+    "reports_directory": "./reports"
+  }
+}

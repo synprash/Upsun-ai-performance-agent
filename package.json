@@ -1,0 +1,36 @@
+{
+  "name": "solvay-ai-performance-agent",
+  "version": "1.0.0",
+  "description": "Traffic-aware Blackfire APM & Drupal multisite performance optimization agent for Solvay (Node.js)",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "solvay-perf-agent": "./bin/cli.js"
+  },
+  "scripts": {
+    "start": "node bin/cli.js analyze",
+    "demo": "node bin/cli.js demo",
+    "analyze": "node bin/cli.js analyze",
+    "test": "node --test tests/*.test.js",
+    "check-keys": "node bin/cli.js check-keys",
+    "test-notify": "node bin/cli.js test-notify"
+  },
+  "keywords": [
+    "blackfire",
+    "drupal",
+    "upsun",
+    "performance",
+    "apm",
+    "ai-agent",
+    "multisite",
+    "nodejs"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Solvay Platform Engineering",
+  "license": "MIT",
+  "dependencies": {
+    "pptxgenjs": "^4.0.1"
+  }
+}

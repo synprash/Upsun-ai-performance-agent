@@ -1,0 +1,15 @@
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env
+config.json
+reports/*.md
+!reports/.gitkeep
+data/raw_logs/*
+!data/raw_logs/.gitkeep
+.DS_Store
+.~lock.*
+~$*

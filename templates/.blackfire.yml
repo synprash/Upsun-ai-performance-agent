@@ -1,0 +1,69 @@
+# Blackfire.io Build Scenarios and Assertions for Solvay Drupal Multisite
+# Place this file in the root of solvay-solvay_platform/.blackfire.yml
+
+tests:
+  "Pages response time should be fast":
+    path: "/.*"
+    assertions:
+      - "main.wall_time < 800ms"
+      - "main.cpu_time < 500ms"
+      - "main.memory < 64MB"
+
+  "SQL query budget for Solvay Homepage":
+    path: "/"
+    assertions:
+      - "metrics.sql.queries.count <= 60"
+      - "metrics.sql.queries.time < 150ms"
+
+  "Solr Search query budget":
+    path: "/search/.*"
+    assertions:
+      - "metrics.solr.queries.count <= 6"
+      - "metrics.solr.queries.time < 200ms"
+
+  "Product and Article detail pages":
+    path: "/(products|articles|news)/.*"
+    assertions:
+      - "metrics.sql.queries.count <= 75"
+      - "metrics.memcached.calls.count > 0"  # Ensures Memcached render cache is functioning
+
+scenarios: |
+  #!blackfire-player
+
+  # Scenario: Solvay Main Portal
+  scenario
+    name "Solvay Main Portal - Critical Flows"
+    endpoint "https://solvay.solvay"
+    set name "Homepage"
+    visit url("/")
+      expect status_code() == 200
+    set name "Product Catalog"
+    visit url("/en/products")
+      expect status_code() == 200
+    set name "Search query"
+    visit url("/en/search/global?search_api_fulltext=polymer")
+      expect status_code() == 200
+
+  # Scenario: Solvay Brand Site
+  scenario
+    name "Solvay Brand Site"
+    endpoint "https://brand.solvay"
+    set name "Brand Homepage"
+    visit url("/")
+      expect status_code() == 200
+
+  # Scenario: Solvay Bicarbonato Multi-country Site
+  scenario
+    name "Solvay Bicarbonato"
+    endpoint "https://bicarbonato.solvay"
+    set name "Bicarbonato Home"
+    visit url("/")
+      expect status_code() == 200
+
+  # Scenario: Solvay Peroxidos Brazil
+  scenario
+    name "Solvay Peroxidos"
+    endpoint "https://peroxidos.solvay"
+    set name "Peroxidos Home"
+    visit url("/")
+      expect status_code() == 200

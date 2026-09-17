@@ -1,0 +1,42 @@
+# Instructions for activating Blackfire.io on Upsun for Solvay Drupal Multisite
+
+# 1. Update .upsun/config.yaml under applications.drupal.runtime.extensions:
+# -------------------------------------------------------------------------
+applications:
+  drupal:
+    runtime:
+      extensions:
+        - apcu
+        - sodium
+        - gd
+        - zip
+        - intl
+        - xsl
+        - memcached
+        - imagick
+        - blackfire # <--- Add this extension
+
+# 2. Set Upsun Environment Variables (via CLI or Upsun Web Console):
+# -------------------------------------------------------------------------
+# The Blackfire PHP extension and Probe require server and client credentials:
+#
+# Server credentials (used by the Blackfire Agent on Upsun):
+# upsun variable:create --level project env:BLACKFIRE_SERVER_ID --value "<YOUR_SERVER_ID>"
+# upsun variable:create --level project env:BLACKFIRE_SERVER_TOKEN --value "<YOUR_SERVER_TOKEN>" --sensitive true
+#
+# Client credentials (used for Blackfire CLI profiling & build triggers):
+# upsun variable:create --level project env:BLACKFIRE_CLIENT_ID --value "<YOUR_CLIENT_ID>"
+# upsun variable:create --level project env:BLACKFIRE_CLIENT_TOKEN --value "<YOUR_CLIENT_TOKEN>" --sensitive true
+#
+# Environment UUID (links profiles to your Blackfire environment dashboard):
+# upsun variable:create --level project env:BLACKFIRE_ENVIRONMENT_UUID --value "<YOUR_ENV_UUID>"
+
+# 3. Optional: Add a daily / scheduled AI Performance Agent trigger in Upsun Crons:
+# -------------------------------------------------------------------------
+# applications:
+#   drupal:
+#     crons:
+#       ai_performance_check:
+#         spec: "0 6 * * *" # Daily at 06:00 UTC
+#         commands:
+#           start: "node /path/to/solvay-ai-performance-agent/bin/cli.js analyze"
